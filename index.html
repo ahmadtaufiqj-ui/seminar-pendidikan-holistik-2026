@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pusat Kawalan & Dashboard Interaktif - Seminar Pendidikan Holistik 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .badge-selesai { background-color: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-sedang { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+    .badge-belum { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .pulse-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #22c55e;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+
+  <!-- TOP HEADER -->
+  <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center font-bold text-xl text-emerald-300">
+          SPH
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Seminar Pendidikan Holistik 2026</h1>
+          <p class="text-xs text-emerald-200">Pusat Kawalan & Pemantauan Interaktif 10 Portfolio Jawatankuasa</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2 text-xs">
+        <div class="flex items-center gap-2 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+          <span class="pulse-dot"></span>
+          <span id="sync-status" class="text-emerald-300 font-medium">Bersambung ke Google Sheets</span>
+        </div>
+        <button onclick="fetchSheetData()" class="bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition text-white px-3 py-1.5 rounded-lg font-medium shadow flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Muat Semula Data
+        </button>
+        <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Buka Google Sheet AJK
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- HERO & COUNTDOWN CARD -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <!-- Tarikh & Lokasi -->
+      <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md w-fit mb-3">
+            <span>Maklumat Utama Seminar</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
+            "Membina Generasi Rabbani Melalui Ekosistem Pendidikan Holistik"
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 text-xs text-slate-600">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="text-slate-400 block font-medium">Tarikh & Masa</span>
+              <strong class="text-slate-900 text-sm">7 Disember 2026</strong> (8.00 pagi - 5.00 petang)
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="text-slate-400 block font-medium">Lokasi</span>
+              <strong class="text-slate-900 text-sm">Auditorium PPH</strong>, Johor Bahru
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="text-slate-400 block font-medium">Sasaran Peserta</span>
+              <strong class="text-slate-900 text-sm">300 Orang</strong> (150 PPH + 150 Luar)
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+          <span>Pengarah Program: <strong class="text-slate-800">Ustaz Ahmad Taufiq bin Abd Jaafar</strong></span>
+          <span>Anjuran Bersama: <strong class="text-slate-800">PPH · MIEB · MPGBSIM</strong></span>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN TIMER -->
+      <div class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="text-xs uppercase font-semibold text-emerald-300 tracking-wider">Hitung Detik Menuju Seminar</div>
+          <div class="text-sm text-emerald-100 mt-0.5">Isnin, 7 Disember 2026</div>
+          <div class="grid grid-cols-4 gap-2 mt-4 text-center">
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/10">
+              <span id="cd-days" class="text-2xl font-black block text-emerald-300">--</span>
+              <span class="text-[10px] uppercase text-emerald-100">Hari</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/10">
+              <span id="cd-hours" class="text-2xl font-black block text-emerald-300">--</span>
+              <span class="text-[10px] uppercase text-emerald-100">Jam</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/10">
+              <span id="cd-mins" class="text-2xl font-black block text-emerald-300">--</span>
+              <span class="text-[10px] uppercase text-emerald-100">Minit</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/10">
+              <span id="cd-secs" class="text-2xl font-black block text-emerald-300">--</span>
+              <span class="text-[10px] uppercase text-emerald-100">Saat</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-white/10 text-center text-xs text-emerald-200">
+          Tarikh Tutup Pendaftaran: <span class="text-amber-300 font-bold">25 November 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS OVERVIEW CARDS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="text-xs font-semibold text-slate-500 uppercase">Jumlah Tugasan</div>
+        <div class="text-3xl font-extrabold text-slate-900 mt-1" id="stat-total">128</div>
+        <div class="text-xs text-slate-500 mt-1">10 Unit Jawatankuasa</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-emerald-200 bg-emerald-50/30">
+        <div class="text-xs font-semibold text-emerald-700 uppercase">Selesai</div>
+        <div class="text-3xl font-extrabold text-emerald-600 mt-1" id="stat-selesai">0</div>
+        <div class="text-xs text-emerald-700 font-medium mt-1" id="stat-selesai-pct">0% disempurnakan</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-amber-200 bg-amber-50/30">
+        <div class="text-xs font-semibold text-amber-700 uppercase">Sedang Berjalan</div>
+        <div class="text-3xl font-extrabold text-amber-600 mt-1" id="stat-sedang">0</div>
+        <div class="text-xs text-amber-700 font-medium mt-1">Dalam proses tindakan</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+        <div class="text-xs font-semibold text-slate-500 uppercase">Belum Mula</div>
+        <div class="text-3xl font-extrabold text-slate-600 mt-1" id="stat-belum">0</div>
+        <div class="text-xs text-slate-500 mt-1">Fasa persediaan awal/semasa</div>
+      </div>
+    </div>
+
+    <!-- OVERALL READINESS PROGRESS BAR -->
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+        <div>
+          <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Peratusan Kesiapsiagaan Keseluruhan Seminar</h3>
+          <p class="text-xs text-slate-500">Dikira berasaskan formulasi nisbah kemajuan: (Selesai 100% + Tindakan 50%) / 128 Tugasan</p>
+        </div>
+        <div class="text-2xl font-black text-emerald-600" id="overall-percentage">0%</div>
+      </div>
+      <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200">
+        <div id="overall-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-700" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- BELANJAWAN & KEWANGAN REALITI CARD -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">Kedudukan Realiti Kewangan & Belanjawan</h3>
+          <p class="text-xs text-slate-500">Kemas kini rasmi: Tiada lebihan belanjawan setakat ini. Dana pasti adalah RM11,000.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2.5 py-1 rounded-full border border-amber-300">
+          Defisit / Sasaran Tambahan: RM 16,200
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Dana Pasti Ada -->
+        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
+          <div class="text-xs font-semibold text-emerald-800 uppercase">Dana Pasti Terkumpul</div>
+          <div class="text-2xl font-black text-emerald-700 mt-1">RM 11,000</div>
+          <ul class="text-xs text-emerald-900 mt-2 space-y-1">
+            <li>✓ Peruntukan PPH: <strong>RM 10,000</strong></li>
+            <li>✓ Sumbangan MPGBSIM: <strong>RM 1,000</strong></li>
+            <li class="text-slate-500">✗ MIEB: Tiada peruntukan dana</li>
+          </ul>
+        </div>
+
+        <!-- Sasaran Yuran & Tajaan (Belum Pasti) -->
+        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+          <div class="text-xs font-semibold text-amber-800 uppercase">Sasaran Belum Pasti</div>
+          <div class="text-2xl font-black text-amber-700 mt-1">RM 19,000</div>
+          <ul class="text-xs text-amber-900 mt-2 space-y-1">
+            <li>⏳ Yuran 150 Peserta Luar (HerePay): <strong>RM 15,000</strong></li>
+            <li>⏳ Penajaan Luar / YPH / PIBG: <strong>RM 4,000</strong></li>
+            <li class="text-xs text-amber-800 italic">*Yuran 150 staf PPH ditanggung oleh PPH</li>
+          </ul>
+        </div>
+
+        <!-- Anggaran Perbelanjaan -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-600 uppercase">Jumlah Anggaran Belanja</div>
+          <div class="text-2xl font-black text-slate-800 mt-1">RM 27,200</div>
+          <ul class="text-xs text-slate-600 mt-2 space-y-1">
+            <li>• Makanan/Jamuan: RM 14,000</li>
+            <li>• Cenderahati & Beg: RM 4,800</li>
+            <li>• Publisiti & Teknikal: RM 4,400</li>
+            <li>• Pengurusan & Luar Jangka: RM 4,000</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 UNIT PORTFOLIO PROGRESS CARDS -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900">Kemajuan Gerak Kerja 10 Portfolio Jawatankuasa</h3>
+        <span class="text-xs text-slate-500">Klik butang unit di bawah untuk tapis tugasan</span>
+      </div>
+      <div id="unit-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5">
+        <!-- Injected via JavaScript -->
+        <div class="p-4 bg-white rounded-xl border border-slate-200 animate-pulse text-xs text-slate-400">Memuatkan status 10 portfolio...</div>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE TASK EXPLORER SECTION -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">Senarai Semak Terperinci Tugasan (128 Tindakan)</h3>
+          <p class="text-xs text-slate-500">Data dikemas kini secara langsung dari Google Sheets. Perubahan AJK dipaparkan di sini serta-merta.</p>
+        </div>
+        <div class="text-xs text-slate-500">
+          Memaparkan <span id="filtered-count" class="font-bold text-emerald-700">128</span> tugasan
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <!-- Cari Kata Kunci -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Carian Kata Kunci / PIC:</label>
+          <input type="text" id="search-input" oninput="applyFilters()" placeholder="Taip nama tugas, PIC, atau catatan..." class="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        </div>
+
+        <!-- Tapis Mengikut Unit -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Tapis Mengikut Unit:</label>
+          <select id="filter-unit" onchange="applyFilters()" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+            <option value="ALL">Semua Unit (10 Portfolio)</option>
+          </select>
+        </div>
+
+        <!-- Tapis Mengikut Status -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Tapis Mengikut Status:</label>
+          <select id="filter-status" onchange="applyFilters()" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+            <option value="ALL">Semua Status</option>
+            <option value="SELESAI">Selesai Sahaja</option>
+            <option value="SEDANG BERJALAN">Sedang Berjalan Sahaja</option>
+            <option value="BELUM MULA">Belum Mula Sahaja</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE CONTAINER -->
+      <div class="overflow-x-auto custom-scrollbar border border-slate-200 rounded-xl">
+        <table class="w-full text-left text-xs text-slate-700">
+          <thead class="bg-slate-100 text-slate-700 font-semibold uppercase text-[11px] border-b border-slate-200 sticky top-0">
+            <tr>
+              <th class="p-3 w-12 text-center">No</th>
+              <th class="p-3 w-20">Kod</th>
+              <th class="p-3 w-48">Unit & Pegawai</th>
+              <th class="p-3">Deskripsi Tindakan & Fasa</th>
+              <th class="p-3 w-28 text-center">Status</th>
+              <th class="p-3 w-24 text-center">Sasaran</th>
+              <th class="p-3 w-36">Catatan</th>
+            </tr>
+          </thead>
+          <tbody id="task-table-body" class="divide-y divide-slate-100">
+            <tr>
+              <td colspan="7" class="p-8 text-center text-slate-400">Memuatkan data senarai semak dari Google Sheets...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOOTER PANDUAN PENGGUNAAN AJK -->
+    <div class="bg-emerald-950 text-emerald-100 rounded-2xl p-6 shadow-sm text-xs leading-relaxed">
+      <div class="flex items-center gap-2 font-bold text-sm text-emerald-300 mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Panduan Tindakan untuk Jawatankuasa Pelaksana (AJK)
+      </div>
+      <p class="mb-3">
+        Dashboard ini berhubung terus dengan Google Spreadsheet induk. Semua Ketua Portfolio dan AJK boleh mengemas kini status gerak kerja masing-masing dengan mudah:
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-emerald-200">
+        <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
+          <strong class="text-white block mb-1">1. Buka Google Sheet</strong>
+          Klik butang kuning di atas untuk membuka helaian <em>"Pusat Kawalan Tugasan Seminar 2026"</em>.
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
+          <strong class="text-white block mb-1">2. Pilih Tab "Senarai Semak"</strong>
+          Cari baris tugasan anda dan tukar status (SELESAI / SEDANG BERJALAN / BELUM MULA).
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
+          <strong class="text-white block mb-1">3. Auto Sync</strong>
+          Sebaik sahaja status dikemas kini di Google Sheet, dashboard ini akan mengemas kini carta dan peratusan secara automatik!
+        </div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-emerald-900/80 text-[11px] text-emerald-400 flex flex-wrap justify-between items-center gap-2">
+        <span>© 2026 Seminar Pendidikan Holistik · Pusat Kawalan Pengarah Program</span>
+        <span>Pautan Tetap Dashboard Web (Boleh diakses bila-bila masa)</span>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const SPREADSHEET_ID = '14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI';
+    const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=Senarai_Semak_Tugasan`;
+
+    let allTasks = [];
+
+    // Countdown Timer to 7 Dec 2026 08:00 MYT
+    const eventDate = new Date('2026-12-07T08:00:00+08:00').getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance < 0) {
+        document.getElementById('cd-days').innerText = '00';
+        document.getElementById('cd-hours').innerText = '00';
+        document.getElementById('cd-mins').innerText = '00';
+        document.getElementById('cd-secs').innerText = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').innerText = String(minutes).padStart(2, '0');
+      document.getElementById('cd-secs').innerText = String(seconds).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Fetch data from Google Sheet GViz API
+    async function fetchSheetData() {
+      const syncStatus = document.getElementById('sync-status');
+      syncStatus.innerText = 'Menyegerakkan data...';
+      try {
+        const res = await fetch(GVIZ_URL);
+        const text = await res.text();
+        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/);
+        if (!jsonMatch) throw new Error('Format respon Google Sheets tidak sah.');
+
+        const data = JSON.parse(jsonMatch[1]);
+        const rows = data.table.rows;
+
+        allTasks = rows.map((r, idx) => {
+          const c = r.c;
+          return {
+            no: c[0] ? (c[0].v || idx + 1) : idx + 1,
+            code: c[1] ? (c[1].v || '') : '',
+            unit: c[2] ? (c[2].v || '') : '',
+            pic: c[3] ? (c[3].v || '') : '',
+            phase: c[4] ? (c[4].v || '') : '',
+            action: c[5] ? (c[5].v || '') : '',
+            status: c[6] ? String(c[6].v || 'BELUM MULA').trim().toUpperCase() : 'BELUM MULA',
+            deadline: c[7] ? (c[7].f || c[7].v || '') : '',
+            notes: c[8] ? (c[8].v || '') : ''
+          };
+        });
+
+        populateUnitFilter();
+        renderStatsAndCards();
+        applyFilters();
+
+        const nowStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        syncStatus.innerText = `Terkini: ${nowStr} (Live)`;
+      } catch (err) {
+        console.error('Ralat membaca Google Sheets:', err);
+        syncStatus.innerText = 'Ralat sambungan (Guna data simpanan)';
+      }
+    }
+
+    function populateUnitFilter() {
+      const unitSelect = document.getElementById('filter-unit');
+      const uniqueUnits = [...new Set(allTasks.map(t => t.unit).filter(Boolean))].sort();
+      
+      const currentVal = unitSelect.value;
+      unitSelect.innerHTML = '<option value="ALL">Semua Unit (10 Portfolio)</option>';
+      uniqueUnits.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u;
+        opt.textContent = u;
+        unitSelect.appendChild(opt);
+      });
+      if (uniqueUnits.includes(currentVal)) {
+        unitSelect.value = currentVal;
+      }
+    }
+
+    function renderStatsAndCards() {
+      let total = allTasks.length;
+      let selesai = allTasks.filter(t => t.status === 'SELESAI').length;
+      let sedang = allTasks.filter(t => t.status === 'SEDANG BERJALAN' || t.status === 'DALAM TINDAKAN').length;
+      let belum = allTasks.filter(t => t.status === 'BELUM MULA' || (!t.status.includes('SELESAI') && !t.status.includes('SEDANG'))).length;
+
+      document.getElementById('stat-total').innerText = total;
+      document.getElementById('stat-selesai').innerText = selesai;
+      document.getElementById('stat-sedang').innerText = sedang;
+      document.getElementById('stat-belum').innerText = belum;
+
+      const selesaiPct = total > 0 ? Math.round((selesai / total) * 100) : 0;
+      document.getElementById('stat-selesai-pct').innerText = `${selesaiPct}% disempurnakan`;
+
+      // Overall Progress Calculation: (Selesai * 1.0 + Sedang * 0.5) / Total
+      const weightedProgress = total > 0 ? Math.round(((selesai * 1.0 + sedang * 0.5) / total) * 100) : 0;
+      document.getElementById('overall-percentage').innerText = `${weightedProgress}%`;
+      document.getElementById('overall-bar').style.width = `${weightedProgress}%`;
+
+      // Render 10 Unit Cards
+      const unitMap = {};
+      allTasks.forEach(t => {
+        if (!unitMap[t.unit]) {
+          unitMap[t.unit] = { unit: t.unit, total: 0, selesai: 0, sedang: 0, belum: 0 };
+        }
+        unitMap[t.unit].total += 1;
+        if (t.status === 'SELESAI') unitMap[t.unit].selesai += 1;
+        else if (t.status === 'SEDANG BERJALAN' || t.status === 'DALAM TINDAKAN') unitMap[t.unit].sedang += 1;
+        else unitMap[t.unit].belum += 1;
+      });
+
+      const cardsContainer = document.getElementById('unit-cards-container');
+      cardsContainer.innerHTML = '';
+
+      Object.values(unitMap).forEach(u => {
+        const uPct = u.total > 0 ? Math.round(((u.selesai * 1.0 + u.sedang * 0.5) / u.total) * 100) : 0;
+        
+        let colorTheme = 'emerald';
+        if (uPct < 20) colorTheme = 'slate';
+        else if (uPct < 60) colorTheme = 'teal';
+
+        const card = document.createElement('div');
+        card.className = "p-4 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between";
+        card.onclick = () => {
+          document.getElementById('filter-unit').value = u.unit;
+          applyFilters();
+          document.getElementById('task-table-body').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-slate-800 mb-1">
+              <span class="truncate pr-1">${u.unit}</span>
+              <span class="text-emerald-600 font-extrabold">${uPct}%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2.5">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: ${uPct}%"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+            <span>Tugasan: <strong>${u.total}</strong></span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-emerald-700 font-bold" title="Selesai">${u.selesai}✓</span>
+              <span class="text-amber-700 font-bold" title="Sedang Berjalan">${u.sedang}⏳</span>
+              <span class="text-slate-400" title="Belum Mula">${u.belum}○</span>
+            </div>
+          </div>
+        `;
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      const searchVal = document.getElementById('search-input').value.toLowerCase();
+      const selectedUnit = document.getElementById('filter-unit').value;
+      const selectedStatus = document.getElementById('filter-status').value;
+
+      const filtered = allTasks.filter(t => {
+        const matchSearch = !searchVal || 
+          t.action.toLowerCase().includes(searchVal) ||
+          t.pic.toLowerCase().includes(searchVal) ||
+          t.code.toLowerCase().includes(searchVal) ||
+          t.notes.toLowerCase().includes(searchVal);
+
+        const matchUnit = (selectedUnit === 'ALL') || (t.unit === selectedUnit);
+        
+        let matchStatus = true;
+        if (selectedStatus === 'SELESAI') matchStatus = (t.status === 'SELESAI');
+        else if (selectedStatus === 'SEDANG BERJALAN') matchStatus = (t.status === 'SEDANG BERJALAN' || t.status === 'DALAM TINDAKAN');
+        else if (selectedStatus === 'BELUM MULA') matchStatus = (t.status === 'BELUM MULA' || (!t.status.includes('SELESAI') && !t.status.includes('SEDANG')));
+
+        return matchSearch && matchUnit && matchStatus;
+      });
+
+      document.getElementById('filtered-count').innerText = filtered.length;
+
+      const tbody = document.getElementById('task-table-body');
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400">Tiada tugasan menepati tapisan yang dipilih.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(t => {
+        let badgeClass = 'badge-belum';
+        let statusLabel = 'Belum Mula';
+        if (t.status === 'SELESAI') {
+          badgeClass = 'badge-selesai';
+          statusLabel = 'Selesai';
+        } else if (t.status === 'SEDANG BERJALAN' || t.status === 'DALAM TINDAKAN') {
+          badgeClass = 'badge-sedang';
+          statusLabel = 'Sedang Berjalan';
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+        tr.innerHTML = `
+          <td class="p-3 text-center text-slate-400 font-medium">${t.no}</td>
+          <td class="p-3 font-mono font-semibold text-emerald-800 text-[11px]">${t.code}</td>
+          <td class="p-3">
+            <div class="font-semibold text-slate-900">${t.unit}</div>
+            <div class="text-[11px] text-slate-500">${t.pic}</div>
+          </td>
+          <td class="p-3">
+            <div class="font-medium text-slate-800 leading-snug">${t.action}</div>
+            <div class="text-[10px] text-emerald-700 mt-0.5 font-semibold">${t.phase}</div>
+          </td>
+          <td class="p-3 text-center">
+            <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${badgeClass}">${statusLabel}</span>
+          </td>
+          <td class="p-3 text-center font-mono text-slate-600 text-[11px]">${t.deadline || '-'}</td>
+          <td class="p-3 text-[11px] text-slate-500">${t.notes || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Initial load
+    fetchSheetData();
+  </script>
+</body>
+</html>

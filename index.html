@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .badge-selesai { background-color: #dcfce7; color: #15803d; border: 1px solid #86efac; }
@@ -32,37 +31,52 @@
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-16">
 
   <!-- TOP HEADER -->
   <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center font-bold text-xl text-emerald-300">
           SPH
         </div>
         <div>
-          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Seminar Pendidikan Holistik 2026</h1>
-          <p class="text-xs text-emerald-200">Pusat Kawalan & Pemantauan Interaktif 10 Portfolio Jawatankuasa</p>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight">Seminar Pendidikan Holistik 2026</h1>
+          <p class="text-[11px] text-emerald-200">Pusat Kawalan & Pemantauan Interaktif 10 Portfolio Jawatankuasa</p>
         </div>
       </div>
 
       <div class="flex items-center flex-wrap gap-2 text-xs">
-        <div class="flex items-center gap-2 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+        <div class="hidden sm:flex items-center gap-2 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1.5 rounded-full">
           <span class="pulse-dot"></span>
           <span id="sync-status" class="text-emerald-300 font-medium">Bersambung ke Google Sheets</span>
         </div>
         <button onclick="fetchSheetData()" class="bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition text-white px-3 py-1.5 rounded-lg font-medium shadow flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          Muat Semula Data
+          <span class="hidden sm:inline">Muat Semula</span>
         </button>
-        <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-          Buka Google Sheet AJK
+        <!-- BUTANG UTAMA HEADER KE GOOGLE SHEET -->
+        <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg shadow-md transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <span>Kemaskini di Google Sheet</span>
         </a>
       </div>
     </div>
   </header>
+
+  <!-- BANNER TINDAKAN KHAS UNTUK AJK -->
+  <div class="bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 py-2.5 px-4 shadow-sm border-b border-amber-300">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm">
+      <div class="flex items-center gap-2 font-medium text-center sm:text-left">
+        <span class="text-base">📢</span>
+        <span><strong>Perhatian Semua Ketua Unit & AJK:</strong> Ingin mengemas kini status kemajuan gerak kerja portfolio anda?</span>
+      </div>
+      <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-amber-300 font-bold px-3.5 py-1 rounded-lg text-xs shadow transition whitespace-nowrap">
+        <span>Buka Google Sheet AJK</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+    </div>
+  </div>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
@@ -157,7 +171,7 @@
       <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
         <div>
           <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Peratusan Kesiapsiagaan Keseluruhan Seminar</h3>
-          <p class="text-xs text-slate-500">Dikira berasaskan formulasi nisbah kemajuan: (Selesai 100% + Tindakan 50%) / 128 Tugasan</p>
+          <p class="text-xs text-slate-500">Formulasi saintifik nisbah kemajuan: (Selesai 100% + Sedang Berjalan 50%) / 128 Tugasan</p>
         </div>
         <div class="text-2xl font-black text-emerald-600" id="overall-percentage">0%</div>
       </div>
@@ -217,9 +231,9 @@
 
     <!-- 10 UNIT PORTFOLIO PROGRESS CARDS -->
     <div class="space-y-3">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-wrap items-center justify-between gap-2">
         <h3 class="text-base font-bold text-slate-900">Kemajuan Gerak Kerja 10 Portfolio Jawatankuasa</h3>
-        <span class="text-xs text-slate-500">Klik butang unit di bawah untuk tapis tugasan</span>
+        <span class="text-xs text-slate-500">Klik kad portfolio untuk tapis tugasan di bawah</span>
       </div>
       <div id="unit-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5">
         <!-- Injected via JavaScript -->
@@ -234,8 +248,16 @@
           <h3 class="text-base font-bold text-slate-900">Senarai Semak Terperinci Tugasan (128 Tindakan)</h3>
           <p class="text-xs text-slate-500">Data dikemas kini secara langsung dari Google Sheets. Perubahan AJK dipaparkan di sini serta-merta.</p>
         </div>
-        <div class="text-xs text-slate-500">
-          Memaparkan <span id="filtered-count" class="font-bold text-emerald-700">128</span> tugasan
+        
+        <!-- BUTANG TERUS KE GOOGLE SHEET DARI JADUAL -->
+        <div class="flex items-center gap-3">
+          <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs shadow transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            <span>Ubah Status di Google Sheets</span>
+          </a>
+          <div class="text-xs text-slate-500">
+            Tugasan: <span id="filtered-count" class="font-bold text-emerald-700">128</span>
+          </div>
         </div>
       </div>
 
@@ -302,24 +324,32 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-emerald-200">
         <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
           <strong class="text-white block mb-1">1. Buka Google Sheet</strong>
-          Klik butang kuning di atas untuk membuka helaian <em>"Pusat Kawalan Tugasan Seminar 2026"</em>.
+          Klik mana-mana butang kuning <em>"Kemaskini di Google Sheet"</em> pada skrin.
         </div>
         <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
           <strong class="text-white block mb-1">2. Pilih Tab "Senarai Semak"</strong>
-          Cari baris tugasan anda dan tukar status (SELESAI / SEDANG BERJALAN / BELUM MULA).
+          Cari baris tugasan unit anda dan tukar status (SELESAI / SEDANG BERJALAN / BELUM MULA).
         </div>
         <div class="p-3 rounded-lg bg-emerald-900/60 border border-emerald-800">
           <strong class="text-white block mb-1">3. Auto Sync</strong>
-          Sebaik sahaja status dikemas kini di Google Sheet, dashboard ini akan mengemas kini carta dan peratusan secara automatik!
+          Sebaik sahaja status dikemas kini di Google Sheet, dashboard web ini akan mengemas kini carta dan peratusan secara automatik!
         </div>
       </div>
       <div class="mt-4 pt-3 border-t border-emerald-900/80 text-[11px] text-emerald-400 flex flex-wrap justify-between items-center gap-2">
         <span>© 2026 Seminar Pendidikan Holistik · Pusat Kawalan Pengarah Program</span>
-        <span>Pautan Tetap Dashboard Web (Boleh diakses bila-bila masa)</span>
+        <span>Pautan Tetap Dashboard Web (Boleh diakses bila-bila masa dari telefon bimbit & komputer)</span>
       </div>
     </div>
 
   </main>
+
+  <!-- FLOATING ACTION BUTTON (KHAS UNTUK TELEFON PINTAR / MOBILE QUICK ACCESS) -->
+  <div class="fixed bottom-4 right-4 z-40">
+    <a href="https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing" target="_blank" class="flex items-center gap-2 bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-950 font-bold px-4 py-3 rounded-full shadow-2xl border-2 border-amber-300 transition group">
+      <svg class="w-5 h-5 text-slate-900 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      <span class="text-xs sm:text-sm font-extrabold tracking-tight">Kemaskini Tugasan AJK</span>
+    </a>
+  </div>
 
   <script>
     const SPREADSHEET_ID = '14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI';
@@ -357,7 +387,7 @@
     // Fetch data from Google Sheet GViz API
     async function fetchSheetData() {
       const syncStatus = document.getElementById('sync-status');
-      syncStatus.innerText = 'Menyegerakkan data...';
+      if (syncStatus) syncStatus.innerText = 'Menyegerakkan data...';
       try {
         const res = await fetch(GVIZ_URL);
         const text = await res.text();
@@ -387,10 +417,10 @@
         applyFilters();
 
         const nowStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        syncStatus.innerText = `Terkini: ${nowStr} (Live)`;
+        if (syncStatus) syncStatus.innerText = `Terkini: ${nowStr} (Live)`;
       } catch (err) {
         console.error('Ralat membaca Google Sheets:', err);
-        syncStatus.innerText = 'Ralat sambungan (Guna data simpanan)';
+        if (syncStatus) syncStatus.innerText = 'Ralat sambungan (Guna data simpanan)';
       }
     }
 
@@ -425,7 +455,7 @@
       const selesaiPct = total > 0 ? Math.round((selesai / total) * 100) : 0;
       document.getElementById('stat-selesai-pct').innerText = `${selesaiPct}% disempurnakan`;
 
-      // Overall Progress Calculation: (Selesai * 1.0 + Sedang * 0.5) / Total
+      // Formulasi Saintifik Nisbah Kemajuan: (Selesai * 1.0 + Sedang * 0.5) / Total
       const weightedProgress = total > 0 ? Math.round(((selesai * 1.0 + sedang * 0.5) / total) * 100) : 0;
       document.getElementById('overall-percentage').innerText = `${weightedProgress}%`;
       document.getElementById('overall-bar').style.width = `${weightedProgress}%`;
@@ -448,10 +478,6 @@
       Object.values(unitMap).forEach(u => {
         const uPct = u.total > 0 ? Math.round(((u.selesai * 1.0 + u.sedang * 0.5) / u.total) * 100) : 0;
         
-        let colorTheme = 'emerald';
-        if (uPct < 20) colorTheme = 'slate';
-        else if (uPct < 60) colorTheme = 'teal';
-
         const card = document.createElement('div');
         card.className = "p-4 bg-white rounded-xl border border-slate-200/90 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between";
         card.onclick = () => {

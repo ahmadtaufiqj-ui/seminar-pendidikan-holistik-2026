@@ -3,7 +3,7 @@
 Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pendidikan Holistik 2026** anjuran bersama **Pusat Pendidikan Hidayah (PPH)**, **Musleh Integrated Education Berhad (MIEB)**, dan **Majlis Pengetua Guru Besar Sekolah-sekolah Islam Malaysia (MPGBSIM)**.
 
 * 🌐 **Pautan Dashboard Web Langsung**: [https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/](https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/)
-* 📋 **Pusat Kawalan Tugasan (Google Sheets)**: [Buka Google Sheets AJK](https://docs.google.com/spreadsheets/d/14logo8dmRVsb1oPf0mAk6Bz5GdTDJ3q4B7mONzOQzsI/edit?usp=sharing)
+* 📋 **Pusat Kawalan Tugasan (Google Sheets)**: [Buka Google Sheets AJK](https://docs.google.com/spreadsheets/d/1rldmze8vJTH7WaIX6ijgSkXNW9Wd6CZlQekqVRth6og/edit?usp=sharing)
 
 ---
 

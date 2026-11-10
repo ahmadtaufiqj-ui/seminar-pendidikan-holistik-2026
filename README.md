@@ -1,6 +1,6 @@
 # 📊 Pusat Kawalan & Dashboard Interaktif — Seminar Pendidikan Holistik 2026
 
-Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pendidikan Holistik 2026** anjuran bersama **Pusat Pendidikan Hidayah (PPH)**, **Musleh Integrated Education Berhad (MIEB)**, dan **Majlis Pengetua Guru Besar Sekolah-sekolah Islam Malaysia (MPGBSIM)**.
+Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pendidikan Holistik 2026**.
 
 * 🌐 **Pautan Dashboard Web Langsung**: [https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/](https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/)
 * 📋 **Pusat Kawalan Tugasan (Google Sheets)**: [Buka Google Sheets AJK](https://docs.google.com/spreadsheets/d/1rldmze8vJTH7WaIX6ijgSkXNW9Wd6CZlQekqVRth6og/edit?usp=sharing)
@@ -9,9 +9,8 @@ Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pen
 
 ## 🎯 Maklumat Utama Program
 * **Tarikh:** Isnin, 7 Disember 2026 (8.00 pagi – 5.00 petang)
-* **Tempat:** Auditorium Pusat Pendidikan Hidayah, Johor Bahru
+* **Tempat:** Sekitar Johor Bahru (Belum dimuktamadkan)
 * **Sasaran Peserta:** 300 Orang (150 Warga PPH + 150 Peserta Luar)
-* **Pengarah Program:** Ustaz Ahmad Taufiq bin Abd Jaafar
 
 ---
 

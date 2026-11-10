@@ -3,7 +3,7 @@
 Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pendidikan Holistik 2026**.
 
 * 🌐 **Pautan Dashboard Web Langsung**: [https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/](https://ahmadtaufiqj-ui.github.io/seminar-pendidikan-holistik-2026/)
-* 📋 **Pusat Kawalan Tugasan (Google Sheets)**: [Buka Google Sheets AJK](https://docs.google.com/spreadsheets/d/1OqEpJNoyLl0YXj9MZSiLdjivPfbXD9WMwovKGcTqYAg/edit?usp=sharing)
+* 📋 **Pusat Kawalan Tugasan (Google Sheets)**: [Buka Google Sheets AJK](https://docs.google.com/spreadsheets/d/1li1ssf1KuDghhPq8gPBFJjWpKlMdlkDMXQLOwdEZC7I/edit?usp=sharing)
 
 ---
 

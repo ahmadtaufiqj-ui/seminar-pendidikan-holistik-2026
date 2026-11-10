@@ -8,6 +8,7 @@ Repositori rasmi bagi sistem pemantauan dan pengurusan gerak kerja **Seminar Pen
 ---
 
 ## 🎯 Maklumat Utama Program
+* **Tema:** Pendidikan Holistik: Membina Generasi Pembentuk Masa Hadapan
 * **Tarikh:** Isnin, 7 Disember 2026 (8.00 pagi – 5.00 petang)
 * **Tempat:** Sekitar Johor Bahru (Belum dimuktamadkan)
 * **Sasaran Peserta:** 300 Orang (150 Warga PPH + 150 Peserta Luar)
